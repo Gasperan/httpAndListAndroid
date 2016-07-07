@@ -1,7 +1,7 @@
 package com.nisum.android.secondhomework;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -47,15 +47,13 @@ public class MainActivity extends AppCompatActivity {
                     if(response.isSuccessful()) {
                         String xmlResponse = response.body().string();
                         JSONObject result = XML.toJSONObject(xmlResponse);
-                        JSONObject rss = result.getJSONObject("rss");
-                        JSONObject channel = rss.getJSONObject("channel");
-                        JSONArray items = channel.getJSONArray("item");
+                        JSONArray items = result.getJSONObject("rss").getJSONObject("channel").getJSONArray("item");
                         Log.v(TAG, "items: " + items.toString());
                     }
                 } catch (IOException e) {
                     Log.e(TAG,"Exception caught: ", e);
                 }catch (JSONException e){
-                    e.printStackTrace();
+                    Log.e(TAG,"Exception caught: ", e);
                 }
             }
         });
